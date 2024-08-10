@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule A</title>
+    <script>
+        function checkField1() {
+            var nameField = document.getElementById('name');
+            if (nameField.value !== '') {
+                document.getElementById('email').disabled = false;
+            } else {
+                document.getElementById('email').disabled = true;
+                document.getElementById('file1').disabled = true;
+                document.getElementById('file2').disabled = true;
+            }
+        }
+
+        function checkField2() {
+            var emailField = document.getElementById('email');
+            if (emailField.value !== '') {
+                document.getElementById('file1').disabled = false;
+            } else {
+                document.getElementById('file1').disabled = true;
+                document.getElementById('file2').disabled = true;
+            }
+        }
+
+        function checkField3() {
+            var file1Field = document.getElementById('file1');
+            if (file1Field.value !== '') {
+                document.getElementById('file2').disabled = false;
+            } else {
+                document.getElementById('file2').disabled = true;
+            }
+        }
+    </script>
+</head>
+<body>
+
+<h2>Sequential Form</h2>
+<form method="POST" enctype="multipart/form-data">
+    Contract Signed by both buyer/seller: <input type="text" id="name" name="name" oninput="checkField1()"><br><br>
+    Upload File 1: <input type="file" id="file1" name="file1" disabled onchange="checkField3()"><br><br>
+
+    Contract registered by concerned: <input type="text" id="email" name="email" disabled oninput="checkField2()"><br><br>
+    Upload File 2: <input type="file" id="file2" name="file2" disabled><br><br>
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
