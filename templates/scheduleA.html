@@ -4,49 +4,151 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schedule A</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        function checkField1() {
-            var nameField = document.getElementById('name');
-            if (nameField.value !== '') {
-                document.getElementById('email').disabled = false;
+        function enableNextField(currentFieldId, nextFieldId) {
+            var currentField = document.getElementById(currentFieldId);
+            if (currentField.value !== '' || currentField.files.length > 0) {
+                document.getElementById(nextFieldId).disabled = false;
             } else {
-                document.getElementById('email').disabled = true;
-                document.getElementById('file1').disabled = true;
-                document.getElementById('file2').disabled = true;
-            }
-        }
-
-        function checkField2() {
-            var emailField = document.getElementById('email');
-            if (emailField.value !== '') {
-                document.getElementById('file1').disabled = false;
-            } else {
-                document.getElementById('file1').disabled = true;
-                document.getElementById('file2').disabled = true;
-            }
-        }
-
-        function checkField3() {
-            var file1Field = document.getElementById('file1');
-            if (file1Field.value !== '') {
-                document.getElementById('file2').disabled = false;
-            } else {
-                document.getElementById('file2').disabled = true;
+                document.getElementById(nextFieldId).disabled = true;
             }
         }
     </script>
 </head>
-<body>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
-<h2>Sequential Form</h2>
-<form method="POST" enctype="multipart/form-data">
-    Contract Signed by both buyer/seller: <input type="text" id="name" name="name" oninput="checkField1()"><br><br>
-    Upload File 1: <input type="file" id="file1" name="file1" disabled onchange="checkField3()"><br><br>
+    <div class="w-full max-w-2xl bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-center mb-6">Schedule A - Tasks Pre Shipment</h2>
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
 
-    Contract registered by concerned: <input type="text" id="email" name="email" disabled oninput="checkField2()"><br><br>
-    Upload File 2: <input type="file" id="file2" name="file2" disabled><br><br>
-    <input type="submit" value="Submit">
-</form>
+            <!-- 1. Contract Signed by both buyer/seller -->
+            <div>
+                <h3 class="font-semibold mb-2 text-center">1. Contract Signed by both buyer/seller</h3>
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date1" name="date1" class="w-full p-2 border rounded" oninput="enableNextField('date1', 'docNo1')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo1" name="docNo1" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo1', 'file1')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file1" name="file1" class="w-full p-2 border rounded" disabled onchange="enableNextField('file1', 'date2')">
+            </div>
+        </br>
+
+            <!-- 2. Contract registered by concerned -->
+            <div>
+                <h3 class="font-semibold mb-2 text-center">2. Contract registered by concerned</h3>
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date2" name="date2" class="w-full p-2 border rounded" disabled oninput="enableNextField('date2', 'docNo2')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo2" name="docNo2" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo2', 'file2')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file2" name="file2" class="w-full p-2 border rounded" disabled onchange="enableNextField('file2', 'date3')">
+            </div>
+
+            <!-- 3. Shipping Instruction -->
+            <div>
+                <h3 class="font-semibold mb-2 text-center">3. Shipping Instruction</h3>
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date3" name="date3" class="w-full p-2 border rounded" disabled oninput="enableNextField('date3', 'docNo3')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo3" name="docNo3" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo3', 'file3')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file3" name="file3" class="w-full p-2 border rounded" disabled onchange="enableNextField('file3', 'date4')">
+            </div>
+
+            <!-- 4. Bag Mark Approval -->
+            <div>
+                <h3 class="font-semibold mb-2 text-center">4. Bag Mark Approval</h3>
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date4" name="date4" class="w-full p-2 border rounded" disabled oninput="enableNextField('date4', 'docNo4')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo4" name="docNo4" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo4', 'file4')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file4" name="file4" class="w-full p-2 border rounded" disabled onchange="enableNextField('file4', 'date5')">
+            </div>
+
+            <!-- 5. Vessel Booking -->
+            <div>
+                <h3 class="font-semibold mb-2 text-center">5. Vessel Booking</h3>
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date5" name="date5" class="w-full p-2 border rounded" disabled oninput="enableNextField('date5', 'docNo5')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo5" name="docNo5" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo5', 'file5')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file5" name="file5" class="w-full p-2 border rounded" disabled onchange="enableNextField('file5', 'date6')">
+            </div>
+
+            <!-- 6. PSS (Pre-Shipment Sample) Approval -->
+            <div>
+                <h3 class="font-semibold mb-2 text-center">6. PSS (Pre-Shipment Sample) Approval</h3>
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date6" name="date6" class="w-full p-2 border rounded" disabled oninput="enableNextField('date6', 'docNo6')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo6" name="docNo6" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo6', 'file6')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file6" name="file6" class="w-full p-2 border rounded" disabled onchange="enableNextField('file6', 'date7')">
+            </div>
+
+            <!-- 7. Loading Report From Warehouse (Way Bill To Port) -->
+            <div>
+                <h3 class="font-semibold mb-2 text-center">7. Loading Report From Warehouse (Way Bill To Port)</h3>
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date7" name="date7" class="w-full p-2 border rounded" disabled oninput="enableNextField('date7', 'docNo7')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo7" name="docNo7" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo7', 'file7')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file7" name="file7" class="w-full p-2 border rounded" disabled onchange="enableNextField('file7', 'date8')">
+            </div>
+
+            <!-- 8. Weighbridge Report at Loading -->
+            <div>
+                <h3 class="font-semibold mb-2 text-center">8. Weighbridge Report at Loading</h3>
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date8" name="date8" class="w-full p-2 border rounded" disabled oninput="enableNextField('date8', 'docNo8')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo8" name="docNo8" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo8', 'file8')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file8" name="file8" class="w-full p-2 border rounded" disabled onchange="enableNextField('file8', 'date9')">
+            </div>
+
+            <!-- 9. Warehouse Stock Report -->
+            <div>
+                <h3 class="font-semibold mb-2 text-center">9. Warehouse Stock Report</h3>
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date9" name="date9" class="w-full p-2 border rounded" disabled oninput="enableNextField('date9', 'docNo9')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo9" name="docNo9" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo9', 'file9')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file9" name="file9" class="w-full p-2 border rounded" disabled onchange="enableNextField('file9', 'date10')">
+            </div>
+
+            <!-- 10. Stuffing Report -->
+            <div>
+                <h3 class="font-semibold mb-2 text-center">10. Stuffing Report</h3>
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date10" name="date10" class="w-full p-2 border rounded" disabled oninput="enableNextField('date10', 'docNo10')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo10" name="docNo10" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo10', 'file10')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file10" name="file10" class="w-full p-2 border rounded" disabled onchange="enableNextField('file10', 'date11')">
+            </div>
+
+            <!-- 11. Weighbridge Report at Stuffing -->
+            <div>
+                <h3 class="font-semibold mb-2 text-center">11. Weighbridge Report at Stuffing</h3>
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date11" name="date11" class="w-full p-2 border rounded" disabled oninput="enableNextField('date11', 'docNo11')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo11" name="docNo11" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo11', 'file11')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file11" name="file11" class="w-full p-2 border rounded" disabled onchange="document.getElementById('submit').disabled = false;">
+            </div>
+
+            <div class="flex justify-center">
+                <input type="submit" id="submit" name="submit" value="Submit" class="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer disabled:bg-gray-300" disabled>
+            </div>
+        </form>
+    </div>
 
 </body>
 </html>
