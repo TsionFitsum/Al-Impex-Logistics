@@ -1,27 +1,56 @@
-from flask import Flask, render_template, request
+import os
+from flask import Flask, request, render_template
+from models import PreShipmentTask, db
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///yourdatabase.db'
+app.config['UPLOAD_FOLDER'] = 'uploads'
+db.init_app(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_form():
     if request.method == 'POST':
-        contract_signed = request.form.get('date1')
-        contract_registered = request.form.get('date2')
-        shipping_instruction = request.form.get('date3')
-        
-        doc_no1 = request.form.get('docNo1')
-        doc_no2 = request.form.get('docNo2')
-        doc_no3 = request.form.get('docNo3')
-        
-        file1 = request.files.get('file1')
-        file2 = request.files.get('file2')
-        file3 = request.files.get('file3')
+        try:
+            from datetime import datetime
 
-        # Process the form data and files here
-        if (contract_signed and contract_registered and shipping_instruction and
-            doc_no1 and doc_no2 and doc_no3 and
-            file1 and file2 and file3):
-            return "Form submitted successfully!"
+            def parse_date(date_str):
+                if date_str:
+                    return datetime.strptime(date_str, '%Y-%m-%d').date()
+                return None
+
+            def save_file(file):
+                if file:
+                    filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+                    file.save(filepath)
+                    return file.filename
+                return None
+
+            data = {
+                'contract_signed_date': parse_date(request.form.get('date1')),
+                'contract_signed_doc_no': request.form.get('docNo1'),
+                'contract_signed_file': save_file(request.files.get('file1')),
+                'contract_registered_date': parse_date(request.form.get('date2')),
+                'contract_registered_doc_no': request.form.get('docNo2'),
+                'contract_registered_file': save_file(request.files.get('file2')),
+                'shipping_instruction_date': parse_date(request.form.get('date3')),
+                'shipping_instruction_doc_no': request.form.get('docNo3'),
+                'shipping_instruction_file': save_file(request.files.get('file3')),
+                'bag_mark_sent': request.form.get('sent'),
+                'bag_mark_approve': request.form.get('approve'),
+                'bag_mark_date': parse_date(request.form.get('date4')),
+                'bag_mark_doc_no': request.form.get('docNo4'),
+                'bag_mark_file': save_file(request.files.get('file4'))
+            }
+
+            task = PreShipmentTask(**data)
+            db.session.add(task)
+            db.session.commit()
+
+            return "Form submitted and data saved successfully!"
+
+        except Exception as e:
+            db.session.rollback()
+            return f"An error occurred: {e}"
 
     return render_template('ScheduleA.html')
 
