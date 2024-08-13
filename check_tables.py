@@ -1,10 +1,10 @@
-# from config import app, db
-# from models import PreShipmentTask
+from config import app, db
+from models import PreShipmentTask
 
-# with app.app_context():
-#     # Create all tables
-#     db.create_all()
-#     print("Tables created successfully.")
+with app.app_context():
+    # Create all tables
+    db.create_all()
+    print("Tables created successfully.")
 
 
 # import sqlite3
@@ -43,18 +43,18 @@
 # print("Tables in database:", db.engine.table_names())
 
 
+##################################################################
+# from your_flask_app import db
+# from models import PreShipmentTask  # Import your model
 
-from your_flask_app import db
-from models import PreShipmentTask  # Import your model
+# # Create all tables in the database
+# db.create_all()
 
-# Create all tables in the database
-db.create_all()
+# # Reflect the database schema
+# db.reflect()
 
-# Reflect the database schema
-db.reflect()
-
-# Print the table names
-print("Tables in database:", db.engine.table_names())
+# # Print the table names
+# print("Tables in database:", db.engine.table_names())
 
 
 

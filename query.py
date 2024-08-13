@@ -1,7 +1,7 @@
 import sqlite3
 
 # Connect to the database
-conn = sqlite3.connect('yourdatabase.db')
+conn = sqlite3.connect('logisticsdatabase.db')
 cursor = conn.cursor()
 
 # Execute a query

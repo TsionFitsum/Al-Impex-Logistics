@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weight Certificate Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body class="p-8 bg-gray-50">
+
+    <!-- Form Section -->
+    <div class="max-w-4xl mx-auto mb-12">
+        <h2 class="text-2xl font-bold mb-4">Enter Weight Certificate Details</h2>
+        <form id="certificateForm" class="space-y-4">
+            <!-- Issued To -->
+            <div>
+                <label class="block font-bold">Issued To:</label>
+                <input type="text" id="issuedTo" class="w-full p-2 border rounded" placeholder="DONGSUH FOODS CORPORATION">
+            </div>
+            <!-- Marks -->
+            <div>
+                <label class="block font-bold">Marks:</label>
+                <input type="text" id="marks" class="w-full p-2 border rounded" placeholder="ETHIOPIAN WASHED ARABICA COFFEE SIDAMO 2, CROP 2023/2024">
+            </div>
+            <!-- Net Weight -->
+            <div>
+                <label class="block font-bold">Net Weight:</label>
+                <input type="text" id="netWeight" class="w-full p-2 border rounded" placeholder="60KG">
+            </div>
+            <!-- ICO -->
+            <div>
+                <label class="block font-bold">ICO:</label>
+                <input type="text" id="ico" class="w-full p-2 border rounded" placeholder="010/1193/0011 & 0012">
+            </div>
+            <!-- Cert No -->
+            <div>
+                <label class="block font-bold">Cert No:</label>
+                <input type="text" id="certNo" class="w-full p-2 border rounded" placeholder="0011 & 0012">
+            </div>
+            <!-- Exporter -->
+            <div>
+                <label class="block font-bold">Exporter:</label>
+                <input type="text" id="exporter" class="w-full p-2 border rounded" placeholder="AI IMPEX BUSINESS PLC">
+            </div>
+            <!-- Destination -->
+            <div>
+                <label class="block font-bold">Destination:</label>
+                <input type="text" id="destination" class="w-full p-2 border rounded" placeholder="KOREA">
+            </div>
+            <!-- Number of Packages -->
+            <div>
+                <label class="block font-bold">No of Packages:</label>
+                <input type="text" id="numPackages" class="w-full p-2 border rounded" placeholder="560 BAGS">
+            </div>
+            <!-- Gross Weight -->
+            <div>
+                <label class="block font-bold">Total Weight (Gross):</label>
+                <input type="text" id="grossWeight" class="w-full p-2 border rounded" placeholder="34,020 KGS GROSS">
+            </div>
+            <!-- Net Weight -->
+            <div>
+                <label class="block font-bold">Total Weight (Net):</label>
+                <input type="text" id="totalNetWeight" class="w-full p-2 border rounded" placeholder="33,600 KGS NET">
+            </div>
+            <!-- Port of Loading -->
+            <div>
+                <label class="block font-bold">Port of Loading:</label>
+                <input type="text" id="portLoading" class="w-full p-2 border rounded" placeholder="DJIBOUTI">
+            </div>
+            <!-- Shipped Per MV -->
+            <div>
+                <label class="block font-bold">Shipped Per MV:</label>
+                <input type="text" id="shippedMV" class="w-full p-2 border rounded" placeholder="MSC UNIFIC VI">
+            </div>
+            <!-- B/L No -->
+            <div>
+                <label class="block font-bold">B/L No:</label>
+                <input type="text" id="blNo" class="w-full p-2 border rounded" placeholder="MEDUAA213662">
+            </div>
+            <!-- B/L Date -->
+            <div>
+                <label class="block font-bold">B/L Date:</label>
+                <input type="text" id="blDate" class="w-full p-2 border rounded" placeholder="11/07/2024">
+            </div>
+            <!-- HS Code -->
+            <div>
+                <label class="block font-bold">HS Code:</label>
+                <input type="text" id="hsCode" class="w-full p-2 border rounded" placeholder="090111">
+            </div>
+            <!-- Contract No -->
+            <div>
+                <label class="block font-bold">Contract No:</label>
+                <input type="text" id="contractNo" class="w-full p-2 border rounded" placeholder="P70083.000">
+            </div>
+            <!-- Destination Port -->
+            <div>
+                <label class="block font-bold">Destination Port:</label>
+                <input type="text" id="destPort" class="w-full p-2 border rounded" placeholder="BUSAN, KOREA">
+            </div>
+            <!-- VOY NO -->
+            <div>
+                <label class="block font-bold">Voy No:</label>
+                <input type="text" id="voyNo" class="w-full p-2 border rounded" placeholder="SD426R">
+            </div>
+            <!-- Reference Number -->
+            <div>
+                <label class="block font-bold">Reference Number:</label>
+                <input type="text" id="refNumber" class="w-full p-2 border rounded" placeholder="Enter Reference Number">
+            </div>
+            <button type="button" class="w-full bg-blue-500 text-white p-2 rounded" onclick="generateCertificate()">Generate Certificate</button>
+            <button type="button" id="savePdfBtn" class="w-full bg-green-500 text-white p-2 rounded hidden mt-4" onclick="saveAsPDF()">Save as PDF</button>
+        </form>
+    </div>
+
+    <!-- Certificate Section -->
+    <div id="certificate" class="max-w-4xl mx-auto hidden p-8 bg-white shadow-md">
+        <!-- The generated certificate template will be inserted here -->
+    </div>
+
+    <script>
+        function generateCertificate() {
+            const issuedTo = document.getElementById('issuedTo').value;
+            const marks = document.getElementById('marks').value;
+            const netWeight = document.getElementById('netWeight').value;
+            const ico = document.getElementById('ico').value;
+            const certNo = document.getElementById('certNo').value;
+            const exporter = document.getElementById('exporter').value;
+            const destination = document.getElementById('destination').value;
+            const numPackages = document.getElementById('numPackages').value;
+            const grossWeight = document.getElementById('grossWeight').value;
+            const totalNetWeight = document.getElementById('totalNetWeight').value;
+            const portLoading = document.getElementById('portLoading').value;
+            const shippedMV = document.getElementById('shippedMV').value;
+            const blNo = document.getElementById('blNo').value;
+            const blDate = document.getElementById('blDate').value;
+            const hsCode = document.getElementById('hsCode').value;
+            const contractNo = document.getElementById('contractNo').value;
+            const destPort = document.getElementById('destPort').value;
+            const voyNo = document.getElementById('voyNo').value;
+            const refNumber = document.getElementById('refNumber').value;
+
+            const certificateContent = `
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex flex-col">
+                        <p class="font-bold text-xl">AI Impex</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm">REF: ${refNumber}</p>
+                        <p class="text-sm">Date: ${blDate}</p>
+                    </div>
+                </div>
+
+                <h1 class="text-center text-2xl font-bold mb-6">WEIGHT CERTIFICATE</h1>
+
+                <div class="mb-4">
+                    <p class="font-bold">ISSUED TO NOTIFY:</p>
+                    <p>${issuedTo}</p>
+                </div>
+
+                <div class="mb-4">
+                    <p class="font-bold">MARKS:</p>
+                    <p>${marks}</p>
+                    <p class="font-bold">NET WEIGHT:</p>
+                    <p>${netWeight}</p>
+                    <p class="font-bold">ICO:</p>
+                    <p>${ico}</p>
+                    <p class="font-bold">CERT NO:</p>
+                    <p>${certNo}</p>
+                    <p class="font-bold">EXPORTER:</p>
+                    <p>${exporter}</p>
+                    <p class="font-bold">DESTINATION:</p>
+                    <p>${destination}</p>
+                </div>
+
+                <div class="mb-4">
+                    <p class="font-bold">NO OF PACKAGES:</p>
+                    <p>${numPackages}</p>
+                    <p class="font-bold">TOTAL WEIGHT (GROSS):</p>
+                    <p>${grossWeight}</p>
+                    <p class="font-bold">TOTAL WEIGHT (NET):</p>
+                    <p>${totalNetWeight}</p>
+                    <p class="font-bold">PORT OF LOADING:</p>
+                    <p>${portLoading}</p>
+                    <p class="font-bold">SHIPPED PER MV:</p>
+                    <p>${shippedMV}</p>
+                    <p class="font-bold">B/L NO:</p>
+                    <p>${blNo}</p>
+                    <p class="font-bold">B/L DATE:</p>
+                    <p>${blDate}</p>
+                    <p class="font-bold">HS CODE:</p>
+                    <p>${hsCode}</p>
+                    <p class="font-bold">CONTRACT NO:</p>
+                    <p>${contractNo}</p>
+                    <p class="font-bold">DESTINATION PORT:</p>
+                    <p>${destPort}</p>
+                    <p class="font-bold">VOY NO:</p>
+                    <p>${voyNo}</p>
+                </div>
+
+                <div class="mt-8">
+                    <p>Certified by:</p>
+                    <p class="font-bold">AI Impex Business PLC</p>
+                    <p>Authorized Signature</p>
+                </div>
+            `;
+
+            // Display the certificate content in the certificate section
+            const certificateDiv = document.getElementById('certificate');
+            certificateDiv.innerHTML = certificateContent;
+            certificateDiv.classList.remove('hidden');
+
+            // Show the Save as PDF button
+            document.getElementById('savePdfBtn').classList.remove('hidden');
+        }
+
+        function saveAsPDF() {
+            const certificateDiv = document.getElementById('certificate');
+            const refNumber = document.getElementById('refNumber').value;
+
+            html2canvas(certificateDiv, { scale: 2 }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('p', 'mm', 'a4');
+                const imgWidth = 210;
+                const pageHeight = 295;
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                let heightLeft = imgHeight;
+
+                let position = 0;
+
+                doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    doc.addPage();
+                    doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                doc.save(${refNumber}_WeightCertificate.pdf);
+            });
+        }
+    </script>
+</body>
+</html>
