@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 from models import PreShipmentTask, db
 
 app = Flask(__name__)
@@ -85,13 +85,18 @@ def upload_form():
             db.session.add(task)
             db.session.commit()
 
-            return "Form submitted and data saved successfully!"
+            # Redirect to weightCertificate.html after successful submission
+            return redirect(url_for('weight_certificate'))
 
         except Exception as e:
             db.session.rollback()
             return f"An error occurred: {e}"
 
     return render_template('ScheduleA.html')
+
+@app.route('/weightCertificate', methods=['GET'])
+def weight_certificate():
+    return render_template('weightCertificate.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
