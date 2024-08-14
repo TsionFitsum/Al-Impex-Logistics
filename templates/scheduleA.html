@@ -50,6 +50,103 @@
             <!-- Your existing form content remains unchanged -->
 
             <div>
+                <h3 class="font-semibold mb-2 text-center">1. Contract Signed by both buyer/seller</h3>
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date1" name="date1" class="w-full p-2 border rounded" oninput="enableNextField('date1', 'docNo1')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo1" name="docNo1" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo1', 'file1')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file1" name="file1" class="w-full p-2 border rounded" disabled onchange="enableNextField('file1', 'date2')">
+            </div>
+        </br>
+
+            
+            <div>
+                <h3 class="font-semibold mb-2 text-center">2. Contract registered by concerned</h3>
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date2" name="date2" class="w-full p-2 border rounded" disabled oninput="enableNextField('date2', 'docNo2')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo2" name="docNo2" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo2', 'file2')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file2" name="file2" class="w-full p-2 border rounded" disabled onchange="enableNextField('file2', 'date3')">
+            </div>
+
+            
+            <div>
+                <h3 class="font-semibold mb-2 text-center">3. Shipping Instruction</h3>
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date3" name="date3" class="w-full p-2 border rounded" disabled oninput="enableNextField('date3', 'docNo3')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo3" name="docNo3" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo3', 'file3')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file3" name="file3" class="w-full p-2 border rounded" disabled onchange="enableNextField('file3', 'sent')">
+            </div>
+
+            
+            <div>
+                <h3 class="font-semibold mb-2 text-center">4. Bag Mark Approval</h3>
+                <label class="block mb-2">Sent :</label>
+                 
+                <input type="text" id="sent" name="sent" class="w-full p-2 border rounded" disabled oninput="enableNextField('sent', 'approve')">
+               
+                <label class="block mb-2">Approve :</label>
+
+
+                <input type="text" id="approve" name="approve" class="w-full p-2 border rounded" disabled oninput="enableNextField('approve', 'date4')">
+                
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date4" name="date4" class="w-full p-2 border rounded" disabled oninput="enableNextField('date4', 'docNo4')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo4" name="docNo4" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo4', 'file4')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file4" name="file4" class="w-full p-2 border rounded" disabled onchange="enableNextField('file4', 'sent1')">
+            </div>
+
+            
+            <div>
+                <h3 class="font-semibold mb-2 text-center">5. Vessel Booking</h3>
+                
+                <label class="block mb-2">Sent :</label>
+                 
+                <input type="text" id="sent1" name="sent1" class="w-full p-2 border rounded" disabled oninput="enableNextField('sent1', 'approve1')">
+               
+                <label class="block mb-2">Approve :</label>
+
+
+                <input type="text" id="approve1" name="approve1" class="w-full p-2 border rounded" disabled oninput="enableNextField('approve1', 'date5')">
+                
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date5" name="date5" class="w-full p-2 border rounded" disabled oninput="enableNextField('date5', 'docNo5')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo5" name="docNo5" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo5', 'file5')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file5" name="file5" class="w-full p-2 border rounded" disabled onchange="enableNextField('file5', 'sent2')">
+            </div>
+
+           
+            <div>
+                <h3 class="font-semibold mb-2 text-center">6. PSS (Pre-Shipment Sample) Approval</h3>
+                
+                <label class="block mb-2">Sent :</label>
+                 
+                <input type="text" id="sent2" name="sent2" class="w-full p-2 border rounded" disabled oninput="enableNextField('sent2', 'approve2')">
+               
+                <label class="block mb-2">Approve :</label>
+
+
+                <input type="text" id="approve2" name="approve2" class="w-full p-2 border rounded" disabled oninput="enableNextField('approve2', 'date6')">
+                
+                
+                <label class="block mb-2">Date Issued (GC):</label>
+                <input type="date" id="date6" name="date6" class="w-full p-2 border rounded" disabled oninput="enableNextField('date6', 'docNo6')">
+                <label class="block mt-4 mb-2">Document No:</label>
+                <input type="text" id="docNo6" name="docNo6" class="w-full p-2 border rounded" disabled oninput="enableNextField('docNo6', 'file6')">
+                <label class="block mt-4 mb-2">Upload File:</label>
+                <input type="file" id="file6" name="file6" class="w-full p-2 border rounded" disabled onchange="enableNextField('file6', 'date7')">
+            </div>
+
+
+            <div>
                 <!-- Content of step 1 to step 10 remains unchanged -->
                 <h3 class="font-semibold mb-2 text-center">7. Loading Report From Warehouse (Way Bill To Port)</h3>
                 <label class="block mb-2">Date Issued (GC):</label>
