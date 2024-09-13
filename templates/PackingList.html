@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packing List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body class="p-8 bg-gray-50">
+
+    <!-- Form Section -->
+    <div class="max-w-4xl mx-auto mb-12">
+        <h2 class="text-2xl font-bold mb-20 text-center">Enter Packing List Details</h2>
+        <form id="certificateForm" class="space-y-4">
+            <!-- Issued To -->
+            <div>
+                <label class="block font-bold">Issued To:</label>
+                <input type="text" id="issuedTo" class="w-full p-2 border rounded" placeholder="VOLCAFE LTD">
+            </div>
+            <!-- Port of Loading -->
+            <div>
+                <label class="block font-bold">Port Of Loading:</label>
+                <input type="text" id="portLoading" class="w-full p-2 border rounded" placeholder="DJIBOUTI PORT">
+            </div>
+            <!-- Shipped Per MV -->
+            <div>
+                <label class="block font-bold">Shipped per M/V:</label>
+                <input type="text" id="shippedPerMV" class="w-full p-2 border rounded" placeholder="MSC UNIFIC VI">
+            </div>
+            <!-- B/L No -->
+            <div>
+                <label class="block font-bold">Under B/L No:</label>
+                <input type="text" id="blNo" class="w-full p-2 border rounded" placeholder="MEDUAA213662">
+            </div>
+
+            <div>
+                <label class="block font-bold">Contract No:</label>
+                <input type="text" id="certNo" class="w-full p-2 border rounded" placeholder="P-70083.000">
+            </div>
+            <!-- B/L Date -->
+            <div>
+                <label class="block font-bold">B/L Date:</label>
+                <input type="date" id="blDate" class="w-full p-2 border rounded" >
+            </div>
+            <!-- Contract No -->
+            
+            <!-- Payment Term -->
+            
+            
+            <!-- H.S. Code -->
+            <div>
+                <label class="block font-bold">H.S. Code:</label>
+                <input type="text" id="hsCode" class="w-full p-2 border rounded" placeholder="">
+            </div>
+            <!-- Shipment Terms -->
+            <div>
+                <label class="block font-bold">Shipment Terms:</label>
+                <input type="text" id="shipmentTerms" class="w-full p-2 border rounded" placeholder="">
+            </div>
+            <!-- Destination Port -->
+            <div>
+                <label class="block font-bold">Packing Place:</label>
+                <input type="text" id="packingPlace" class="w-full p-2 border rounded" placeholder="34,020 KGS GROSS">
+            </div>
+            
+            <div>
+                <label class="block font-bold">Packing Date:</label>
+                <input type="date" id="packingDate" class="w-full p-2 border rounded" >
+            </div>
+            <!-- Net Weight -->
+            <div>
+                <label class="block font-bold">Destination Port:</label>
+                <input type="text" id="destPort" class="w-full p-2 border rounded" placeholder="34,020 KGS GROSS">
+            </div>
+            <div>
+                <label class="block font-bold">VOY NO:</label>
+                <input type="text" id="voyNo" class="w-full p-2 border rounded" placeholder="33,600 KGS NET">
+            </div>
+            <!-- B/L Date -->
+            
+            <!-- Marks and Numbers Section -->
+            <div id="marksAndNoContainer">
+                <label class="block font-bold">Marks and No:</label>
+                <input type="text" class="w-full p-2 border rounded mb-2" placeholder="Enter Marks and No">
+            </div>
+
+            <button id="addMoreMarksBtn" class="bg-blue-500 text-white p-2 rounded mt-2">Add More</button>
+
+            <!-- Description of Goods Section -->
+            <div id="goodsDescriptionContainer">
+                <label class="block font-bold">Description of Goods:</label>
+                <input type="text" class="w-full p-2 border rounded mb-2" placeholder="Enter description">
+            </div>
+
+            <button id="addMoreBtn" class="bg-blue-500 text-white p-2 rounded mt-2">Add More</button>
+
+            <!-- Unit Price -->
+            <div>
+                <label class="block font-bold">Quantity:</label>
+                <input type="text" id="quantity" class="w-full p-2 border rounded" placeholder="Enter Unit Price">
+            </div>
+
+            <!-- Total Invoice Amount -->
+            <div>
+                <label class="block font-bold">Gross:</label>
+                <input type="text" id="gross" class="w-full p-2 border rounded" placeholder="Enter Total Amount">
+            </div>
+
+           
+            <div>
+                <label class="block font-bold">Net:</label>
+                <input type="text" id="net" class="w-full p-2 border rounded" placeholder="Enter Total Amount">
+            </div>
+
+            <div>
+                <label class="block font-bold">Container No:</label>
+                <input type="text" id="containerNo" class="w-full p-2 border rounded" placeholder="Enter Total Amount">
+            </div> 
+            <div>
+                <label class="block font-bold">Seal No:</label>
+                <input type="text" id="sealNo" class="w-full p-2 border rounded" placeholder="Enter Total Amount">
+            </div> 
+            
+
+             <!-- Generate Certificate Button -->
+             <button type="button" class="w-full bg-blue-500 text-white p-2 rounded" onclick="generateCertificate()">Generate Certificate</button>
+             <button type="button" id="savePdfBtn" class="w-full bg-green-500 text-white p-2 rounded hidden mt-4" onclick="saveAsPDF()">Save as PDF</button>
+ 
+        </form>
+    </div>
+
+    <!-- Certificate Section -->
+    <div id="certificate" class="max-w-4xl mx-auto hidden p-8 bg-white shadow-md">
+        <!-- The generated certificate template will be inserted here -->
+    </div>
+
+    <!-- JS for handling dynamic input fields -->
+    <script>
+        document.getElementById('addMoreBtn').addEventListener('click', function (event) {
+            event.preventDefault();
+            const newDiv = document.createElement('div');
+            const newInput = document.createElement('input');
+            newInput.type = 'text';
+            newInput.className = 'w-full p-2 border rounded mb-2';
+            newInput.placeholder = 'Enter description';
+            newDiv.appendChild(newInput);
+            document.getElementById('goodsDescriptionContainer').appendChild(newDiv);
+        });
+
+        document.getElementById('addMoreMarksBtn').addEventListener('click', function (event) {
+            event.preventDefault();
+            const newDiv = document.createElement('div');
+            const newInput = document.createElement('input');
+            newInput.type = 'text';
+            newInput.className = 'w-full p-2 border rounded mb-2';
+            newInput.placeholder = 'Enter Marks and No';
+            newDiv.appendChild(newInput);
+            document.getElementById('marksAndNoContainer').appendChild(newDiv);
+        });
+    </script>
+
+    <!-- Script for generating certificate -->
+    <script>
+        function generateCertificate() {
+            const issuedTo = document.getElementById('issuedTo').value;
+            const portLoading = document.getElementById('portLoading').value;
+            const shippedPerMV = document.getElementById('shippedPerMV').value;
+            const blNo = document.getElementById('blNo').value;
+            const blDate = document.getElementById('blDate').value;
+            const certNo = document.getElementById('certNo').value;
+            const hsCode = document.getElementById('hsCode').value;
+            const shipmentTerms = document.getElementById('shipmentTerms').value;
+            const packingPlace = document.getElementById('packingPlace').value;
+            const packingDate = document.getElementById('packingDate').value;
+            const voyNo = document.getElementById('voyNo').value;
+            const destPort = document.getElementById('destPort').value;
+            const quantity = document.getElementById('quantity').value;
+            const gross = document.getElementById('gross').value;
+            const net = document.getElementById('net').value;
+            const containerNo = document.getElementById('containerNo').value;
+            const sealNo = document.getElementById('sealNo').value;
+        
+            const certificateContent = `
+                <div class="mt-10 flex justify-between items-center mt-40">
+                    <div class="flex flex-col"></div>
+                    <div class="text-right mb-16">
+                        <p class="text-sm">REF: ${certNo}</p>
+                        <p class="text-sm">Date: ${blDate}</p>
+                    </div>
+                </div>
+                <h1 class="text-center text-2xl font-bold mb-6">PACKING LIST CERTIFICATE</h1>
+                <p><strong>ISSUED TO:</strong> ${issuedTo}</p>
+                <p><strong>PORT OF LOADING:</strong> ${portLoading}</p>
+                <p><strong>SHIPPED PER M/V:</strong> ${shippedPerMV}</p>
+                <p><strong>UNDER B/L NO:</strong> ${blNo}</p>
+                <p><strong>B/L DATE:</strong> ${blDate}</p>
+                <p><strong>CONTRACT NO:</strong> ${certNo}</p>
+                <p><strong>H.S. CODE:</strong> ${hsCode}</p>
+                <p><strong>SHIPMENT TERM:</strong> ${shipmentTerms}</p>
+                <p><strong>PACKING PLACE:</strong> ${packingPlace}</p>
+                <p><strong>PACKING DATE:</strong> ${packingDate}</p>
+                <p><strong>DESTINATION PORT:</strong> ${destPort}</p>
+                <p><strong>VOY NO:</strong> ${voyNo}</p>
+
+
+
+                <div class="mt-8 mb-10">
+                    <table class="table-auto w-full border-collapse border border-gray-400">
+                        <thead>
+                            <tr>
+                                <th class="border border-gray-300 px-4 py-2">GOODS DESCRIPTION</th>
+                                <th class="border border-gray-300 px-4 py-2">MARKS AND NUMBERS</th>
+                                <th class="border border-gray-300 px-4 py-2">QUANTITY</th>
+                                <th class="border border-gray-300 px-4 py-2">GROSS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2">
+                                    ${Array.from(document.querySelectorAll('#goodsDescriptionContainer input')).map(input => `<p>${input.value}</p>`).join('')}
+                                </td>
+                                <td class="border border-gray-300 px-4 py-2">
+                                    ${Array.from(document.querySelectorAll('#marksAndNoContainer input')).map(input => `<p>${input.value}</p>`).join('')}
+                                </td>
+                                <td class="border border-gray-300 px-4 py-2">${quantity}</td>
+                                <td class="border border-gray-300 px-4 py-2">${gross}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p><strong>CONTAINER NO:</strong> ${containerNo}</p>
+                <p><strong>SEAL NO:</strong> ${sealNo}</p>
+                <p class="mt-20">________________________________</p>
+                <p>For Al Impex Business PLC</p>
+                
+            `;
+        
+            document.getElementById('certificate').innerHTML = certificateContent;
+            document.getElementById('certificate').classList.remove('hidden');
+            document.getElementById('savePdfBtn').classList.remove('hidden');
+        }
+        
+
+        function saveAsPDF() {
+            html2canvas(document.getElementById('certificate')).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                pdf.addImage(imgData, 'PNG', 10, 10, 190, 0);
+                pdf.save('certificate.pdf');
+            });
+        }
+    </script>
+
+</body>
+
+</html>

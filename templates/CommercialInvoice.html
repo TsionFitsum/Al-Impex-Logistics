@@ -14,7 +14,7 @@
 
     <!-- Form Section -->
     <div class="max-w-4xl mx-auto mb-12">
-        <h2 class="text-2xl font-bold mb-4">Enter Commercial Invoice Details</h2>
+        <h2 class="text-2xl font-bold mb-20 text-center">Enter Commercial Invoice Details</h2>
         <form id="certificateForm" class="space-y-4">
             <!-- Issued To -->
             <div>
@@ -24,7 +24,7 @@
             <!-- Port of Loading -->
             <div>
                 <label class="block font-bold">PORT OF LOADING:</label>
-                <input type="text" id="marks" class="w-full p-2 border rounded" placeholder="DJIBOUTI PORT">
+                <input type="text" id="portLoading" class="w-full p-2 border rounded" placeholder="DJIBOUTI PORT">
             </div>
             <!-- Shipped Per MV -->
             <div>
@@ -39,7 +39,7 @@
             <!-- B/L Date -->
             <div>
                 <label class="block font-bold">B/L DATE:</label>
-                <input type="text" id="blDate" class="w-full p-2 border rounded" placeholder="Enter B/L Date">
+                <input type="date" id="blDate" class="w-full p-2 border rounded" placeholder="Enter B/L Date">
             </div>
             <!-- Contract No -->
             <div>
@@ -77,11 +77,7 @@
                 <input type="text" id="totalNetWeight" class="w-full p-2 border rounded" placeholder="33,600 KGS NET">
             </div>
             <!-- B/L Date -->
-            <div>
-                <label class="block font-bold">B/L DATE:</label>
-                <input type="text" id="portLoading" class="w-full p-2 border rounded" placeholder="DJIBOUTI">
-            </div>
-
+            
             <!-- Marks and Numbers Section -->
             <div id="marksAndNoContainer">
                 <label class="block font-bold">Marks and No:</label>
@@ -174,7 +170,7 @@
     <script>
         function generateCertificate() {
             const issuedTo = document.getElementById('issuedTo').value;
-            const marks = document.getElementById('marks').value;
+            
             const netWeight = document.getElementById('netWeight').value;
             const blNo = document.getElementById('blNo').value;
             const blDate = document.getElementById('blDate').value;
