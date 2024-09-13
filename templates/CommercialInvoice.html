@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercial Invoice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body class="p-8 bg-gray-50">
+
+    <!-- Form Section -->
+    <div class="max-w-4xl mx-auto mb-12">
+        <h2 class="text-2xl font-bold mb-4">Enter Commercial Invoice Details</h2>
+        <form id="certificateForm" class="space-y-4">
+            <!-- Issued To -->
+            <div>
+                <label class="block font-bold">FOR ACCOUNT AND RISK OF M/S:</label>
+                <input type="text" id="issuedTo" class="w-full p-2 border rounded" placeholder="VOLCAFE LTD">
+            </div>
+            <!-- Port of Loading -->
+            <div>
+                <label class="block font-bold">PORT OF LOADING:</label>
+                <input type="text" id="marks" class="w-full p-2 border rounded" placeholder="DJIBOUTI PORT">
+            </div>
+            <!-- Shipped Per MV -->
+            <div>
+                <label class="block font-bold">SHIPPED PER M/V:</label>
+                <input type="text" id="netWeight" class="w-full p-2 border rounded" placeholder="MSC UNIFIC VI">
+            </div>
+            <!-- B/L No -->
+            <div>
+                <label class="block font-bold">B/L NO:</label>
+                <input type="text" id="blNo" class="w-full p-2 border rounded" placeholder="MEDUAA213662">
+            </div>
+            <!-- B/L Date -->
+            <div>
+                <label class="block font-bold">B/L DATE:</label>
+                <input type="text" id="blDate" class="w-full p-2 border rounded" placeholder="Enter B/L Date">
+            </div>
+            <!-- Contract No -->
+            <div>
+                <label class="block font-bold">CONTRACT NO:</label>
+                <input type="text" id="certNo" class="w-full p-2 border rounded" placeholder="P-70083.000">
+            </div>
+            <!-- Payment Term -->
+            <div>
+                <label class="block font-bold">PAYMENT TERM:</label>
+                <select id="exporter" class="w-full p-2 border rounded">
+                    <option value="CAD">CAD</option>
+                    <option value="LC">LC</option>
+                    <option value="TT">TT</option>
+                </select>
+            </div>
+            
+            <!-- H.S. Code -->
+            <div>
+                <label class="block font-bold">H.S. CODE:</label>
+                <input type="text" id="destination" class="w-full p-2 border rounded" placeholder="">
+            </div>
+            <!-- Shipment Terms -->
+            <div>
+                <label class="block font-bold">SHIPMENT TERMS:</label>
+                <input type="text" id="numPackages" class="w-full p-2 border rounded" placeholder="">
+            </div>
+            <!-- Destination Port -->
+            <div>
+                <label class="block font-bold">DESTINATION PORT:</label>
+                <input type="text" id="grossWeight" class="w-full p-2 border rounded" placeholder="34,020 KGS GROSS">
+            </div>
+            <!-- Net Weight -->
+            <div>
+                <label class="block font-bold">VOY NO:</label>
+                <input type="text" id="totalNetWeight" class="w-full p-2 border rounded" placeholder="33,600 KGS NET">
+            </div>
+            <!-- B/L Date -->
+            <div>
+                <label class="block font-bold">B/L DATE:</label>
+                <input type="text" id="portLoading" class="w-full p-2 border rounded" placeholder="DJIBOUTI">
+            </div>
+
+            <!-- Marks and Numbers Section -->
+            <div id="marksAndNoContainer">
+                <label class="block font-bold">Marks and No:</label>
+                <input type="text" class="w-full p-2 border rounded mb-2" placeholder="Enter Marks and No">
+            </div>
+
+            <button id="addMoreMarksBtn" class="bg-blue-500 text-white p-2 rounded mt-2">Add More</button>
+
+            <!-- Description of Goods Section -->
+            <div id="goodsDescriptionContainer">
+                <label class="block font-bold">Description of Goods:</label>
+                <input type="text" class="w-full p-2 border rounded mb-2" placeholder="Enter description">
+            </div>
+
+            <button id="addMoreBtn" class="bg-blue-500 text-white p-2 rounded mt-2">Add More</button>
+
+            <!-- Unit Price -->
+            <div>
+                <label class="block font-bold">Unit Price:</label>
+                <input type="text" id="unitPrice" class="w-full p-2 border rounded" placeholder="Enter Unit Price">
+            </div>
+
+            <!-- Total Invoice Amount -->
+            <div>
+                <label class="block font-bold">Total Invoice Amount:</label>
+                <input type="text" id="totalAmount" class="w-full p-2 border rounded" placeholder="Enter Total Amount">
+            </div>
+
+           
+            <div>
+                <label class="block font-bold">Name of Beneficiary Customer:</label>
+                <input type="text" id="nameOfBen" class="w-full p-2 border rounded" placeholder="Enter Total Amount">
+            </div>
+
+            <div>
+                <label class="block font-bold">A/C NO:</label>
+                <input type="text" id="acNo" class="w-full p-2 border rounded" placeholder="Enter Total Amount">
+            </div> 
+            <div>
+                <label class="block font-bold">Account Institution:</label>
+                <input type="text" id="accountInstitution" class="w-full p-2 border rounded" placeholder="Enter Total Amount">
+            </div> 
+            <div>
+                <label class="block font-bold">Swift Code:</label>
+                <input type="text" id="swiftCode" class="w-full p-2 border rounded" placeholder="Enter Total Amount">
+            </div>
+            <div>
+                <label class="block font-bold">Note:</label>
+                <input type="text" id="note" class="w-full p-2 border rounded" placeholder="Enter Total Amount">
+            </div>
+
+             <!-- Generate Certificate Button -->
+             <button type="button" class="w-full bg-blue-500 text-white p-2 rounded" onclick="generateCertificate()">Generate Certificate</button>
+             <button type="button" id="savePdfBtn" class="w-full bg-green-500 text-white p-2 rounded hidden mt-4" onclick="saveAsPDF()">Save as PDF</button>
+ 
+        </form>
+    </div>
+
+    <!-- Certificate Section -->
+    <div id="certificate" class="max-w-4xl mx-auto hidden p-8 bg-white shadow-md">
+        <!-- The generated certificate template will be inserted here -->
+    </div>
+
+    <!-- JS for handling dynamic input fields -->
+    <script>
+        document.getElementById('addMoreBtn').addEventListener('click', function (event) {
+            event.preventDefault();
+            const newDiv = document.createElement('div');
+            const newInput = document.createElement('input');
+            newInput.type = 'text';
+            newInput.className = 'w-full p-2 border rounded mb-2';
+            newInput.placeholder = 'Enter description';
+            newDiv.appendChild(newInput);
+            document.getElementById('goodsDescriptionContainer').appendChild(newDiv);
+        });
+
+        document.getElementById('addMoreMarksBtn').addEventListener('click', function (event) {
+            event.preventDefault();
+            const newDiv = document.createElement('div');
+            const newInput = document.createElement('input');
+            newInput.type = 'text';
+            newInput.className = 'w-full p-2 border rounded mb-2';
+            newInput.placeholder = 'Enter Marks and No';
+            newDiv.appendChild(newInput);
+            document.getElementById('marksAndNoContainer').appendChild(newDiv);
+        });
+    </script>
+
+    <!-- Script for generating certificate -->
+    <script>
+        function generateCertificate() {
+            const issuedTo = document.getElementById('issuedTo').value;
+            const marks = document.getElementById('marks').value;
+            const netWeight = document.getElementById('netWeight').value;
+            const blNo = document.getElementById('blNo').value;
+            const blDate = document.getElementById('blDate').value;
+            const certNo = document.getElementById('certNo').value;
+            const exporter = document.getElementById('exporter').value;
+            const destination = document.getElementById('destination').value;
+            const numPackages = document.getElementById('numPackages').value;
+            const grossWeight = document.getElementById('grossWeight').value;
+            const totalNetWeight = document.getElementById('totalNetWeight').value;
+            const portLoading = document.getElementById('portLoading').value;
+            const unitPrice = document.getElementById('unitPrice').value;
+            const totalAmount = document.getElementById('totalAmount').value;
+            const nameOfBen = document.getElementById('nameOfBen').value;
+            const acNo = document.getElementById('acNo').value;
+            const accountInstitution = document.getElementById('accountInstitution').value;
+            const swiftCode = document.getElementById('swiftCode').value;
+            const note = document.getElementById('note').value;
+
+
+
+            const certificateContent = `
+    <div class="mt-10 flex justify-between items-center  mt-40">
+        <div class="flex flex-col">
+            <!-- You can add more content here if needed -->
+        </div>
+        <div class="text-right mb-16">
+            <p class="text-sm">REF: ${certNo}</p>
+            <p class="text-sm">Date: ${blDate}</p>
+        </div>
+    </div>
+
+    <h1 class="text-center text-2xl font-bold mb-6">COMMERCIAL INVOICE CERTIFICATE</h1>
+
+    <p><strong>FOR ACCOUNT AND RISK OF M/S:</strong> ${issuedTo}</p>
+    <p><strong>PORT OF LOADING:</strong> ${portLoading}</p>
+    <p><strong>SHIPPED PER M/V:</strong> ${netWeight}</p>
+    <p><strong>B/L NO:</strong> ${blNo}</p>
+    <p><strong>B/L DATE:</strong> ${blDate}</p>
+
+    <p><strong>CONTRACT NO:</strong> ${certNo}</p>
+    <p><strong>PAYMENT TERM:</strong> ${exporter}</p>
+    <p><strong>H.S. CODE:</strong> ${destination}</p>
+    <p><strong>SHIPMENT TERM:</strong> ${numPackages}</p>
+    <p><strong>DESTINATION PORT:</strong> ${grossWeight}</p>
+
+    <div class="mt-8 mb-10">
+        <table class="table-auto w-full border-collapse border border-gray-400">
+            <thead>
+                <tr>
+                    <th class="border border-gray-300 px-4 py-2">GOODS DESCRIPTION</th>
+                    <th class="border border-gray-300 px-4 py-2">MARKS AND NUMBERS</th>
+                    <th class="border border-gray-300 px-4 py-2">UNIT PRICE</th>
+                    <th class="border border-gray-300 px-4 py-2">TOTAL INVOICE AMOUNT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="border border-gray-300 px-4 py-2">
+                        ${Array.from(document.querySelectorAll('#goodsDescriptionContainer input')).map(input => `<p>${input.value}</p>`).join('')}
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2">
+                        ${Array.from(document.querySelectorAll('#marksAndNoContainer input')).map(input => `<p>${input.value}</p>`).join('')}
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2">
+                        ${unitPrice}
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2">
+                        ${totalAmount}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p><strong>NAME OF BENEFICIARY CUSTOMER:</strong> ${nameOfBen}</p>
+    <p><strong>A/C NO:</strong> ${acNo}</p>
+    <p><strong>ACCOUNT INSTITUTION:</strong> ${accountInstitution}</p>
+    <p><strong>SWIFT CODE:</strong> ${swiftCode}</p>
+    <p><strong>NOTE:</strong> ${note}</p>
+    <p class="mt-20">________________________________</p>
+    <p>For Al Impex Business PLC</p>
+    <p>CC: Finance Dept.</p>
+`;
+
+
+            document.getElementById('certificate').innerHTML = certificateContent;
+            document.getElementById('certificate').classList.remove('hidden');
+            document.getElementById('savePdfBtn').classList.remove('hidden');
+        }
+
+        function saveAsPDF() {
+            html2canvas(document.getElementById('certificate')).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                pdf.addImage(imgData, 'PNG', 10, 10, 190, 0);
+                pdf.save('certificate.pdf');
+            });
+        }
+    </script>
+
+</body>
+
+</html>
